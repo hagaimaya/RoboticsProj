@@ -25,11 +25,11 @@ int main() {
 	{
 		pc.Read();
 
-		 if(sp.GetScan(2) < 0.8 )
+		 if(sp.GetScan(2) < 0.8  || sp.GetScan(3) < 0.8 || sp.GetScan(1) < 0.8 )
 		 {
 
 			 forwardSpeed = 0.1;
-		     if (sp.GetScan(0) < sp.GetScan(4))
+		     if ((sp.GetScan(0) + sp.GetScan(1)) < (sp.GetScan(4) + sp.GetScan(3)) )
 		     {
 		    	 forwardSpeed = 0;
 		    	 turnSpeed = -90;
@@ -40,12 +40,16 @@ int main() {
 				 turnSpeed = 90;
 		     }
 
+		     while (sp.GetScan(2) < 0.8  || sp.GetScan(3) < 0.8 || sp.GetScan(1) < 0.8 )
+		     {
+		    	 pp.SetSpeed(forwardSpeed,  dtor(turnSpeed));
+		    	 pc.Read();
+		     }
 		 }
-		 else
-		 {
-			 turnSpeed = 0;
-			 forwardSpeed = 0.5;
-		 }
+
+		 turnSpeed = 0;
+		 forwardSpeed = 0.5;
+
 
 
 		 printInfo(90, &pp, sp.GetScan(0));
